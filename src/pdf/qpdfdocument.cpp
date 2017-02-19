@@ -534,7 +534,12 @@ QSizeF QPdfDocument::pageSize(int page) const
 
     const QPdfMutexLocker lock;
 
-    FPDF_GetPageSizeByIndex(d->doc, page, &result.rwidth(), &result.rheight());
+    double width, height;
+    FPDF_GetPageSizeByIndex(d->doc, page, &width, &height);
+
+    result.setWidth((qreal)width);
+    result.setHeight((qreal)height);
+
     return result;
 }
 
