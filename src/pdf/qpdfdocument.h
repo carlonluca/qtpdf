@@ -86,6 +86,24 @@ public:
     };
     Q_ENUM(MetaDataField)
 
+    enum RenderFlag {
+        NoFlag = 0x00,
+        Annot = 0x01,
+        LcdText = 0x02,
+        NoNativeText = 0x04,
+        Grayscale = 0x08,
+        DebugInfo = 0x80,
+        NoCatch = 0x100,
+        RenderLimitedImageCache = 0x200,
+        RenderForceHalfTone = 0x400,
+        Printing = 0x800,
+        RenderNoSmoothText = 0x1000,
+        RenderNoSmoothImage = 0x2000,
+        RenderNoSmoothPath = 0x4000,
+        ReverseByteOrder = 0x10
+    };
+    Q_ENUM(RenderFlag)
+
     explicit QPdfDocument(QObject *parent = nullptr);
     ~QPdfDocument();
 
@@ -107,7 +125,7 @@ public:
 
     QSizeF pageSize(int page) const;
 
-    QImage render(int page, const QSizeF &pageSize);
+    QImage render(int page, const QSizeF &pageSize, QFlags<RenderFlag> flags = RenderFlag::NoFlag);
 
 Q_SIGNALS:
     void passwordChanged();

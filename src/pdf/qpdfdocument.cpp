@@ -543,7 +543,7 @@ QSizeF QPdfDocument::pageSize(int page) const
     return result;
 }
 
-QImage QPdfDocument::render(int page, const QSizeF &pageSize)
+QImage QPdfDocument::render(int page, const QSizeF &pageSize, QFlags<RenderFlag> flags)
 {
     if (!d->doc)
         return QImage();
@@ -558,7 +558,7 @@ QImage QPdfDocument::render(int page, const QSizeF &pageSize)
     result.fill(Qt::transparent);
     FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(result.width(), result.height(), FPDFBitmap_BGRA, result.bits(), result.bytesPerLine());
 
-    FPDF_RenderPageBitmap(bitmap, pdfPage, 0, 0, result.width(), result.height(), 0, 0);
+    FPDF_RenderPageBitmap(bitmap, pdfPage, 0, 0, result.width(), result.height(), 0, static_cast<int>(flags));
 
     FPDFBitmap_Destroy(bitmap);
 

@@ -84,7 +84,7 @@ void PageRenderer::renderPage(int page, qreal zoom)
     QElapsedTimer timer;
     timer.start();
 
-    const QImage &img = m_document->render(page, size);
+    const QImage &img = m_document->render(page, size, QPdfDocument::Annot);
 
     const qreal secs = timer.nsecsElapsed() / 1000000000.0;
     if (secs < m_minRenderTime)
